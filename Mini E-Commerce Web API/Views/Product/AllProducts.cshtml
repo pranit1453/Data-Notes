@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Mini_E_Commerce_Web_API.Models.Products>
+
+@{
+    ViewData["Title"] = "All Products";
+}
+
+<h1 class="mb-3">All Products</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success btn-sm">
+        Create New
+    </a>
+</p>
+
+<table class="table table-bordered table-hover align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+            <th style="width:180px;">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+
+                <td>@item.Description</td>
+
+                <td class="text-center">
+                    <img src="@(string.IsNullOrEmpty(item.Image)
+                                ? "/images/no-image.png"
+                                : item.Image)"
+                         style="width:80px; height:80px; object-fit:contain;"
+                         class="rounded border" />
+                </td>
+
+                <td>
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="btn btn-info btn-sm">
+                            Details
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-warning text-center">
+        No products found.
+    </div>
+}
